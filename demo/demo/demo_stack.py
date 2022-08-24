@@ -4,6 +4,7 @@ from aws_cdk import (
     aws_lambda as _lambda,
     aws_events as _events,
     aws_events_targets as _targets,
+    aws_budgets as _budgets,
 )
 
 class DemoStack(Stack):
@@ -25,4 +26,18 @@ class DemoStack(Stack):
         )
         rule.add_target(_targets.LambdaFunction(lambda_demofunc1))
 
+        # https://docs.aws.amazon.com/cdk/api/v1/python/aws_cdk.aws_budgets/CfnBudget.html
+        budget = _budgets.CfnBudget(
+            self, 'demoBudget',
+            budget=_budgets.CfnBudget.BudgetDataProperty(
+                budget_type="COST",
+                time_unit="MONTHLY",
 
+                # the properties below are optional
+                budget_limit=_budgets.CfnBudget.SpendProperty(
+                    amount=10,
+                    unit="USD"
+                ),
+                budget_name="demoBudget",
+            ),
+        )
