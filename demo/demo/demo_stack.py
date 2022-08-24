@@ -30,14 +30,14 @@ class DemoStack(Stack):
         budget = _budgets.CfnBudget(
             self, 'demoBudget',
             budget=_budgets.CfnBudget.BudgetDataProperty(
-                budget_type="COST",
-                time_unit="MONTHLY",
+                budget_type='COST',
+                time_unit='MONTHLY',
 
                 # the properties below are optional
                 budget_limit=_budgets.CfnBudget.SpendProperty(
                     amount=10,
-                    unit="USD"
+                    unit='USD'
                 ),
-                budget_name="demoBudget",
+                budget_name='demoBudget',
             ),
         )
