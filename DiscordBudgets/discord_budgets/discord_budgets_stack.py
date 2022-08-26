@@ -23,6 +23,7 @@ class DiscordBudgetsStack(Stack):
         BUDGET_LIMIT_AMOUNT = int(os.environ['BUDGET_LIMIT_AMOUNT'])
         WEBHOOK_URL = os.environ['WEBHOOK_URL']
         TIMEZONE = os.environ['TIMEZONE']
+        STARTUP_TIME = os.environ['STARTUP_TIME'].replace(' ','').split(',')
         USER_NAME = os.environ['USER_NAME']
         AVATAR_URL = os.environ['AVATAR_URL']
         MESSAGE = os.environ['MESSAGE']
@@ -72,7 +73,7 @@ class DiscordBudgetsStack(Stack):
         # Create EventBridge rule and set trigger to Lambda
         rule_func1 = _events.Rule(
             self, 'schedule_submitBudgetsToDiscord',
-            schedule = _events.Schedule.cron(minute='0', hour='0', month='*', week_day='*', year='*'),
+            schedule = _events.Schedule.cron(minute=STARTUP_TIME[0], hour=STARTUP_TIME[1], month=STARTUP_TIME[2], week_day=STARTUP_TIME[3], year=STARTUP_TIME[4]),
         )
         rule_func1.add_target(_targets.LambdaFunction(lambda_func1))
 
