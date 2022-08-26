@@ -39,7 +39,7 @@ Edit .env with your favorite editor.
 | ACCOUNT_ID          | XXXXXXXXXXXX                                                                        | ✔          | Deployment destination AWS account ID               |
 | BUDGET_NAME         | discordBudget                                                                       | -           | Budget name to create                               |
 | BUDGET_LIMIT_AMOUNT | 10                                                                                  | -           | "Budget" of Budget to create                        |
-| WEBHOOK_URL         | https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx | ✔          | Post destination URL (Discord Webhook URL)          |
+| WEBHOOK_URL         | https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxx | ✔          | Post destination URL (Discord Webhook URL)          |
 | TIMEZONE            | Asia/Tokyo                                                                          | -           | Time zone                                           |
 | STARTUP_TIME        | 0, 0, *, *, *                                                                       | -           | Lambda start time (UTC)                             |
 | USER_NAME           | ハゲおじ                                                                                | -           | Account name to post on Discord (any value is fine) |
