@@ -1,13 +1,13 @@
 import aws_cdk as core
 import aws_cdk.assertions as assertions
 
-from demo.demo_stack import DemoStack
+from discord_budgets.discord_budgets_stack import DiscordBudgetsStack
 
 # example tests. To run these tests, uncomment this file along with the example
-# resource in demo/demo_stack.py
+# resource in discord_budgets/discord_budgets_stack.py
 def test_sqs_queue_created():
     app = core.App()
-    stack = DemoStack(app, "demo")
+    stack = DiscordBudgetsStack(app, "discord-budgets")
     template = assertions.Template.from_stack(stack)
 
 #     template.has_resource_properties("AWS::SQS::Queue", {

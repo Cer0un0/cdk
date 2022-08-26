@@ -3,11 +3,11 @@ import os
 
 import aws_cdk as cdk
 
-from demo.demo_stack import DemoStack
+from discord_budgets.discord_budgets_stack import DiscordBudgetsStack
 
 
 app = cdk.App()
-DemoStack(app, "DemoStack",
+DiscordBudgetsStack(app, "DiscordBudgetsStack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.

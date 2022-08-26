@@ -12,7 +12,7 @@ from aws_cdk import (
 import os
 from dotenv import load_dotenv
 
-class DemoStack(Stack):
+class DiscordBudgetsStack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
@@ -42,7 +42,7 @@ class DemoStack(Stack):
         )
 
         # Create submitBudgetsToDiscord Function
-        lambda_demofunc1 = _lambda.Function(
+        lambda_func1 = _lambda.Function(
             self, 'submitBudgetsToDiscord',
             runtime = _lambda.Runtime.PYTHON_3_8,
             code = _lambda.Code.from_asset('lambda'),
@@ -61,7 +61,7 @@ class DemoStack(Stack):
         )
 
         # Set "budgets:ViewBudget" pocily to Lambda
-        lambda_demofunc1.add_to_role_policy(_iam.PolicyStatement(
+        lambda_func1.add_to_role_policy(_iam.PolicyStatement(
             effect = _iam.Effect.ALLOW,
             resources=['*'],
             actions=[
@@ -70,14 +70,14 @@ class DemoStack(Stack):
         ))
 
         # Create EventBridge rule and set trigger to Lambda
-        rule_demofunc1 = _events.Rule(
+        rule_func1 = _events.Rule(
             self, 'schedule_submitBudgetsToDiscord',
             schedule = _events.Schedule.cron(minute='0', hour='0', month='*', week_day='*', year='*'),
         )
-        rule_demofunc1.add_target(_targets.LambdaFunction(lambda_demofunc1))
+        rule_func1.add_target(_targets.LambdaFunction(lambda_func1))
 
         # Create a Budget referenced by Lambda
-        budget_demo1 = _budgets.CfnBudget(
+        budget = _budgets.CfnBudget(
             self, 'discordBudget',
             budget = _budgets.CfnBudget.BudgetDataProperty(
                 budget_type = 'COST',
