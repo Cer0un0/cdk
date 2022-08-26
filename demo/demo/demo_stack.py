@@ -22,7 +22,10 @@ class DemoStack(Stack):
         BUDGET_NAME = os.environ['BUDGET_NAME']
         BUDGET_LIMIT_AMOUNT = int(os.environ['BUDGET_LIMIT_AMOUNT'])
         WEBHOOK_URL = os.environ['WEBHOOK_URL']
-        BUDGET_ROLE = os.environ['READ_BUDGET_ROLE']
+        TIMEZONE = os.environ['TIMEZONE']
+        USER_NAME = os.environ['USER_NAME']
+        AVATAR_URL = os.environ['AVATAR_URL']
+        MESSAGE = os.environ['MESSAGE']
 
         # Create requests layer
         layer_requests = _lambda.LayerVersion(
@@ -46,8 +49,12 @@ class DemoStack(Stack):
             handler = 'submitBudgetsToDiscord.lambda_handler',
             environment = {
                 'ACCOUNT_ID': ACCOUNT_ID,
-                'WEBHOOK_URL': WEBHOOK_URL,
                 'BUDGET_NAME': BUDGET_NAME,
+                'WEBHOOK_URL': WEBHOOK_URL,
+                'TIMEZONE': TIMEZONE,
+                'USER_NAME': USER_NAME,
+                'AVATAR_URL': AVATAR_URL,
+                'MESSAGE': MESSAGE,
             },
             timeout = Duration.seconds(300),
             layers = [layer_requests, layer_pytz],
@@ -58,7 +65,7 @@ class DemoStack(Stack):
             effect = _iam.Effect.ALLOW,
             resources=['*'],
             actions=[
-                    'budgets:ViewBudget'
+                    'budgets:ViewBudget',
                 ],
         ))
 
@@ -70,7 +77,6 @@ class DemoStack(Stack):
         rule_demofunc1.add_target(_targets.LambdaFunction(lambda_demofunc1))
 
         # Create a Budget referenced by Lambda
-        # https://docs.aws.amazon.com/cdk/api/v1/python/aws_cdk.aws_budgets/CfnBudget.html
         budget_demo1 = _budgets.CfnBudget(
             self, 'discordBudget',
             budget = _budgets.CfnBudget.BudgetDataProperty(

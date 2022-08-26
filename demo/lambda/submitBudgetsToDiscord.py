@@ -9,6 +9,10 @@ def lambda_handler(event, context):
     ACCOUNTID = os.environ['ACCOUNT_ID']
     WEBHOOK_URL = os.environ['WEBHOOK_URL']
     BUDGET_NAME = os.environ['BUDGET_NAME']
+    USER_NAME = os.environ['USER_NAME']
+    AVATAR_URL = os.environ['AVATAR_URL']
+    MESSAGE = os.environ['MESSAGE']
+    TIMEZONE = os.environ['TIMEZONE']
 
     # AWSから料金や予算を取得
     client = boto3.client('budgets')
@@ -24,26 +28,24 @@ def lambda_handler(event, context):
 
     # 日付
     utcdate = responce['ResponseMetadata']['HTTPHeaders']['date']
-    jst_date = parser.parse(utcdate).astimezone(pytz.timezone('Asia/Tokyo'))
+    jst_date = parser.parse(utcdate).astimezone(pytz.timezone(TIMEZONE))
     date = jst_date.strftime('%Y-%m-%d')
 
     # webhook用データ
-    username = 'ハゲおじ'
-    avatar_url = 'https://www.jp.square-enix.com/ffvii_remake/fankit/_img/snsicon/ICON_RUDE.jpg'
+
     content = (
-        f"タークスのハゲおじだ。\n"
-        f"AWSよりティファが好きだ…。\n"
-        f"[日付]: {date}\n"
-        f"[料金]: ${cost}\n"
-        f"[予測]: ${predicted}\n"
-        f"[予算]: ${budget}"
+        f'{MESSAGE}\n'
+        f'[日付]: {date}\n'
+        f'[料金]: ${cost}\n'
+        f'[予測]: ${predicted}\n'
+        f'[予算]: ${budget}'
     )
 
     # Webhook
     data = {
-        'username': username,
-        "avatar_url": avatar_url,
-        "content": content
+        'username': USER_NAME,
+        'avatar_url': AVATAR_URL,
+        'content': content
     }
 
     # POST
