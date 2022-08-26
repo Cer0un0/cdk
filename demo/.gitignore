@@ -9,5 +9,5 @@ __pycache__
 .cdk.staging
 cdk.out
 .env
-lambda_zip/
+lambda_layer/
 .DS_Store
