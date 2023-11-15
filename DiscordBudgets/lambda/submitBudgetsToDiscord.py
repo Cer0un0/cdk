@@ -50,6 +50,7 @@ def lambda_handler(event, context):
 
     # 各サービスの日別料金
     billings = {}
+    billings["Tax"] = {"amount": 0.0, "diff": 0.0}
     for rbt in response["ResultsByTime"]:
         day_cost = 0
         for item in rbt["Groups"]:
