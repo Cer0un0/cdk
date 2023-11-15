@@ -11,3 +11,4 @@ cdk.out
 .env
 lambda_layer/
 .DS_Store
+venv/

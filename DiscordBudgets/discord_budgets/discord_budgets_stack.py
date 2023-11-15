@@ -67,6 +67,7 @@ class DiscordBudgetsStack(Stack):
             resources=['*'],
             actions=[
                     'budgets:ViewBudget',
+                    'ce:GetCostAndUsage',
                 ],
         ))
 
