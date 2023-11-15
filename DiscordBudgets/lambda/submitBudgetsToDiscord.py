@@ -25,6 +25,12 @@ def get_total_cost_date_range():
 
 
 def lambda_handler(event, context):
+    # 変数
+    ACCOUNTID = os.environ['ACCOUNT_ID']
+    WEBHOOK_URL = os.environ['WEBHOOK_URL']
+    BUDGET_NAME = os.environ['BUDGET_NAME']
+    USER_NAME = os.environ['USER_NAME']
+    AVATAR_URL = os.environ['AVATAR_URL']
     # Budgets
     client = boto3.client("budgets")
     response = client.describe_budget(AccountId=ACCOUNTID, BudgetName=BUDGET_NAME)
@@ -93,8 +99,8 @@ def lambda_handler(event, context):
 
     # Webhook
     data = {
-        "username": "クラウド",
-        "avatar_url": "https://www.jp.square-enix.com/ffvii_remake/fankit/_img/snsicon/ICON_CLOUD.jpg",
+        "username": USER_NAME,
+        "avatar_url": AVATAR_URL,
         "content": content,
     }
 
