@@ -5,12 +5,6 @@ import boto3
 import requests
 from dateutil.relativedelta import relativedelta
 
-# ローカル用
-ACCOUNTID = os.environ["accountId"]
-WEBHOOK_URL = os.environ["WebhookURL"]
-BUDGET_NAME = os.environ["budgetName"]
-
-
 def get_total_cost_date_range():
     today = date.today()
     start_date = today.replace(day=1)  # 範囲の始まり（月初）
@@ -25,6 +19,13 @@ def get_total_cost_date_range():
 
 
 def lambda_handler(event, context):
+    # 変数
+    ACCOUNTID = os.environ['ACCOUNT_ID']
+    WEBHOOK_URL = os.environ['WEBHOOK_URL']
+    BUDGET_NAME = os.environ['BUDGET_NAME']
+    USER_NAME = os.environ['USER_NAME']
+    AVATAR_URL = os.environ['AVATAR_URL']
+    MESSAGE = os.environ['MESSAGE']
     # Budgets
     client = boto3.client("budgets")
     response = client.describe_budget(AccountId=ACCOUNTID, BudgetName=BUDGET_NAME)
@@ -78,9 +79,7 @@ def lambda_handler(event, context):
 
     # 投稿メッセージ
     content = (
-        f"元ソルジャー1stのクラウドだ。\n"
-        f"あんたがAWSをいくら使おうと興味ないね\n"
-        f"\n"
+        f"{MESSAGE}\n"
         f"[期間] {start_date} - {end_date}\n"
         f"[料金] ${total_cost:.2f}\n"
         f"[予測] ${forecast_cost:.2f}\n"
@@ -93,8 +92,8 @@ def lambda_handler(event, context):
 
     # Webhook
     data = {
-        "username": "クラウド",
-        "avatar_url": "https://www.jp.square-enix.com/ffvii_remake/fankit/_img/snsicon/ICON_CLOUD.jpg",
+        "username": USER_NAME,
+        "avatar_url": AVATAR_URL,
         "content": content,
     }
 
